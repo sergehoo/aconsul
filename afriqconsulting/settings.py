@@ -38,7 +38,7 @@ LOGGING = {
         'file': {
             'level': 'ERROR',
             'class': 'logging.FileHandler',
-            'filename': 'static/logs/error.log',
+            'filename': os.path.join(BASE_DIR, 'static/logs/error.log'),
         },
     },
     'loggers': {
