@@ -1,0 +1,613 @@
+  {% extends 'layout/base.html' %}
+{% load static %}
+{% load humanizelib %}
+{% block centrale %}
+<main class="fix">
+
+<style>
+  #veilleVideo {
+    pointer-events: none; /* Désactive le clic droit sur l'élément vidéo */
+  }
+</style>
+            <!-- tp-hero-area-start -->
+            <div class="tp-hero-area tp-hero-overlay black-bg pt-200 pb-115 p-relative">
+               <div class="tp-hero-4-shape-img  wow tpfadeLeft" data-wow-duration=".9s" data-wow-delay=".5s">
+                  <img src="{% static 'assets/img/hero/hero-shape-4-1.png' %}' %}" alt="">
+               </div>
+               <div class="tp-hero-glob-img">
+                  <img src="{% static 'assets/img/hero/hero-4-3.png' %}" alt="">
+               </div>
+               <div class="container">
+                  <div class="row">
+                     <div class="col-xl-7 col-lg-7">
+                        <div class="tp-hero-4-section-box pt-10 z-index-3">
+                           <h5 class="tp-section-subtitle-4 tp-char-animation" style="color: orangered"> Bienvenue à AFRIQ CONSULTING</h5>
+                           <h3 class="tp-hero-title-3 pb-35 tp-char-animation " style="color: white">THE TRUSTED PARTNER FOR DIGITAL TRANS- FORMATION </h3>
+{#                           <h3 class="tp-hero-title-3 pb-35 tp-char-animation ">VOTRE ALLIE POUR LA TRANSFORMATION DIGITAL </h3>#}
+                           <a class="tp-btn-border wow tpfadeRight" data-wow-duration=".9s" data-wow-delay=".7s" href="{% url 'contact' %}"><span>Contactez-nous<i class="far fa-angle-right"></i></span></a>
+                        </div>
+                     </div>
+                     <div class="col-xl-5 col-lg-5">
+                        <div class="tp-hero-4-img-wrapper p-relative">
+                           <div class="tp-hero-4-main-img text-center z-index-3">
+                              <img src="{% static 'assets/img/logoaq.png' %}" alt="">
+                           </div>
+                           <div class="tp-hero-4-sub-img z-index-3">
+                              <img src="{% static 'assets/img/hero/hero-4-2.png' %}" alt="">
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <!-- tp-hero-area-end -->
+
+            <!-- tp-brand-area-start -->
+            <div class="tp-barnd-area tp-barnd-plr black-bg z-index-3 fix">
+               <div class="tp-barnd-main-wrapper p-relative">
+                  <div class="tp-barnd-shape-1">
+                     <img src="{% static 'assets/img/brand/image_01.png' %}" alt="">
+                  </div>
+                  <div class="container">
+                     <div class="row align-items-center">
+                        <div class="col-xl-4 col-lg-4">
+                           <div class="tp-barnd-left-item d-flex align-items-center">
+                              <div class="tp-barnd-icon">
+                                 <img src="{% static 'assets/img/hero/hero-slider-icon-1.jpg' %}" alt="">
+                              </div>
+                              <h5 class="tp-barnd-title-sm">Ils nous ont fait confiance</h5>
+                           </div>
+                        </div>
+                        <div class="col-xl-8 col-lg-8">
+                           <div class="tp-barnd-slider-wrapper">
+                              <div class="tp-barnd-slider-active p-relative">
+                                 <div class="tp-brand-item">
+                                    <img src="{% static 'assets/img/hero/ipci.png' %}" alt="">
+                                 </div>
+                                 <div class="tp-brand-item">
+                                    <img src="{% static 'assets/img/hero/cnam.png' %}" alt="">
+                                 </div>
+                                 <div class="tp-brand-item">
+                                    <img src="{% static 'assets/img/hero/chu.png' %}" alt="">
+                                 </div>
+                                 <div class="tp-brand-item">
+                                    <img src="{% static 'assets/img/hero/mshp.png' %}" alt="">
+                                 </div>
+                                 <div class="tp-brand-item">
+                                    <img src="{% static 'assets/img/hero/inhp.png' %}" alt="">
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <!-- tp-brand-area-end -->
+
+            <!-- tp-service-area-start -->
+            <div class="tp-service-area black-bg p-relative pt-115 pb-105">
+               <div class="tp-service-shape-right z-index">
+                  <img src="{% static 'assets/img/service/service-shape-right.png' %}" alt="">
+               </div>
+               <div class="container">
+                  <div class="row align-items-end mb-60">
+                     <div class="col-xl-6 col-lg-6">
+                        <div class="tp-service-section-four">
+                           <h5 class="tp-section-subtitle-4 pb-10" style="color: orangered">CONNAISSANCE METIER</h5>
+                           <h3 class="tp-section-title-4">Nos Services</h3>
+                        </div>
+                     </div>
+                     <div class="col-xl-6 col-lg-6  wow tpfadeRight" data-wow-duration=".9s" data-wow-delay=".5s">
+                        <div class="tp-service-sction-content pb-15 d-flex justify-content-md-start justify-content-end">
+                           <p>AFRIQ Consulting <br> Fournis des solutions digitales et de securité dans tous les secteurs d'activité.
+                           </p>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="tp-service-4-border-top  wow tpfadeUp" data-wow-duration=".9s" data-wow-delay=".7s">
+                     <div class="row">
+                         {% for service in services %}
+                        <div class="col-xl-3 col-lg-4 col-md-6 mb-50  {{ service.animclas }}">
+                           <div class="tp-service-4-item z-index">
+                              <div class="tp-service-4-icon">
+                                  <img src="{{ service.icon.url }}" alt="">
+                              </div>
+                              <div class="tp-service-4-content">
+                                 <span>{{ service.category }}</span>
+                                 <h4 class="tp-service-4-title"><a href="#"> {{ service.name }} </a></h4>
+                                 <a class="tp-btn-service" href="{% url 'service_detail' service.pk %}" style="color: orangered">En Savoir Plus</a>
+                              </div>
+                           </div>
+                        </div>
+                         {% endfor %}
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <!-- tp-service-area-end -->
+
+            <!-- tp-about-area-start -->
+            <div class="tp-about-area pb-135 black-bg p-relative">
+               <div class="tp-about-top-img-2">
+                  <img src="{% static 'assets/img/about/about-4-3.png' %}" alt="">
+               </div>
+               <div class="container">
+                  <div class="row align-items-center">
+                     <div class="col-xl-6 col-lg-6 wow tpfadeLeft" data-wow-duration=".9s" data-wow-delay=".3s">
+                        <div class="tp-about-left-img text-md-center p-relative text-start z-index">
+                           <img src="{% static 'assets/img/about/about-4-1.png' %}" alt="">
+                           <div class="tp-about-top-img">
+                              <img src="{% static 'assets/img/about/about-4-2.png' %}" alt="">
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-xl-6 col-lg-6 wow tpfadeRight" data-wow-duration=".9s" data-wow-delay=".5s">
+                        <div class="tp-security-section-wrapper">
+                           <div class="tp-security-section-box mb-45">
+                              <h5 class="tp-section-subtitle-4 pb-10" style="color: orangered">Notre particularité </h5>
+                              <h3 class="tp-section-title-4 pb-25">La confidence et la sécurité</h3>
+                              <p>sont des priorités absolues de nos solutions de cybersécurité , de protections des informations sensibles de nos clients.
+                                  Nous garantissons la confidentialité, l’intégrité et la disponibilité des données.
+                              </p>
+                           </div>
+                           <div class="tp-security-feature">
+                              <ul>
+                                 <li><i class="far fa-check"></i>Haute-Performance</li>
+                                 <li><i class="far fa-check"></i>Meilleur Pratique de Securité</li>
+                              </ul>
+                           </div>
+                           <div class="tp-security-btn">
+                              <a class="tp-btn-yellow-border" href="#" style="color: orangered">En Savoir Plus <i class="far fa-angle-right"></i></a>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <!-- tp-about-area-end -->
+
+            <!-- tp-fun-fact-area-start -->
+            <div class="tp-fun-fact-area pb-75 black-bg">
+               <div class="container">
+                  <div class="row">
+                     <div class="col-xl-4 col-lg-4 col-md-4 mb-60 tp-counter-br">
+                        <div class="tp-fun-fact-item tp-fun-fact-space-1 d-flex align-items-center">
+                           <h4><span data-purecounter-duration="1" data-purecounter-end="15" class="purecounter" style="color: orangered">0</span>+</h4>
+                           <p>Années <br> d'Experience</p>
+                        </div>
+                     </div>
+                     <div class="col-xl-4 col-lg-4 col-md-4 mb-60 tp-counter-br">
+                        <div class="tp-fun-fact-item tp-fun-fact-space-2 d-flex align-items-center">
+                           <h4><span data-purecounter-duration="1" data-purecounter-end="150" class="purecounter" style="color: orangered">0</span>%</h4>
+                           <p>Année <br> Croissance</p>
+                        </div>
+                     </div>
+                     <div class="col-xl-4 col-lg-4 col-md-4 mb-60 tp-counter-br">
+                        <div class="tp-fun-fact-item tp-fun-fact-space-3 d-flex align-items-center">
+                           <h4><span data-purecounter-duration="1" data-purecounter-end="21" class="purecounter" style="color: orangered">0</span>+</h4>
+                           <p>Projets</p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <!-- tp-fun-fact-area-end -->
+
+            <!-- tp-platform-area-start -->
+            <div class="tp-platform-area border-tb black-bg pt-115 pb-105 p-relative z-index">
+               <div class="tp-platform-bg-shape">
+                  <img src="{% static 'assets/img/Platform/p-bg.png' %}" alt="">
+               </div>
+               <div class="container">
+                  <div class="row align-items-end mb-40">
+                     <div class="col-xl-7 col-lg-6">
+                        <div class="tp-platform-section-box">
+                           <h5 class="tp-section-subtitle-4 pb-10" style="color: orangered">Produits </h5>
+                           <h3 class="tp-section-title-4">Nos Solutions</h3>
+                        </div>
+                     </div>
+                     <div class="col-xl-5 col-lg-6  wow tpfadeRight" data-wow-duration=".9s" data-wow-delay=".5s">
+                        <div class="tp-platform-text">
+                           <p>Explorez nos solution gouvernementales, qui ont un impact direct dans le quotidien des populations.
+                           </p>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row align-items-center">
+                     <div class="col-xl-2 col-lg-2 d-none d-xl-block">
+                        <div class="tp-platform-img-box">
+                           <img src="{% static 'assets/img/payment/platform-1.png' %}" alt="">
+                        </div>
+                     </div>
+                     <div class="col-xl-10 col-lg-12">
+                        <div class="row-custom-wrapper">
+                           <div class="row-custom">
+                              <div class="col-custom">
+                                 <div class="tp-panel-item">
+                                    <div class="tp-panel-content">
+                                       <span>01.</span>
+                                       <h4 class="tp-panel-title child-one"> GESTION LABORATOIRE</h4>
+                                    </div>
+                                 </div>
+                                 <div class="tp-panel-item-2">
+                                    <div class="tp-panel-content-2">
+                                       <span>01.</span>
+                                       <h4 class="tp-panel-title-2">KENEYA LABS</h4>
+                                       <p class="small">Améliore l’efficacité des opérations et garantir une gestion sécurisée des données médicales. Elle offre une plateforme complète dans la gestion des échantillons, des analyses, et la traçabilité des résultats</p>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="col-custom">
+                                 <div class="tp-panel-item">
+                                    <div class="tp-panel-content">
+                                       <span>02.</span>
+                                       <h4 class="tp-panel-title child-two">GESTION MÉDICALE</h4>
+                                    </div>
+                                 </div>
+                                 <div class="tp-panel-item-2">
+                                    <div class="tp-panel-content-2">
+                                       <span>02.</span>
+                                       <h4 class="tp-panel-title-2">KENEYA HOSPITAL</h4>
+                                       <p>plateforme tout-en-un conçue pour optimiser l’administration des établissements de santé. Elle intègre la gestion des patients, des consultations, des hospitalisations et des dossiers patients.</p>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="col-custom active">
+                                 <div class="tp-panel-item">
+                                    <div class="tp-panel-content">
+                                       <span>03.</span>
+                                       <h4 class="tp-panel-title child-three">ANALYSE & STATISTIQUES</h4>
+                                    </div>
+                                 </div>
+                                 <div class="tp-panel-item-2">
+                                    <div class="tp-panel-content-2">
+                                       <span>03.</span>
+                                       <h4 class="tp-panel-title-2">AFRIQ DASH</h4>
+                                       <p> Un outil puissant de visualisation et d’analyse des données, conçu pour les décideurs. Elle permet de centraliser toutes les informations clés de l’entreprise ou de l’organisation sur une interface intuitive.</p>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="col-custom">
+                                 <div class="tp-panel-item">
+                                    <div class="tp-panel-content">
+                                       <span>04.</span>
+                                       <h4 class="tp-panel-title child-four">VEILLE SANITAIRE</h4>
+                                    </div>
+                                 </div>
+                                 <div class="tp-panel-item-2">
+                                    <div class="tp-panel-content-2">
+                                       <span>04.</span>
+                                       <h4 class="tp-panel-title-2">Surveillance EPIDEMIE </h4>
+                                       <p>Renforcer la surveillance et la gestion des données de santé publique. Elle permet de suivre en temps réel les cas signalés, d’analyser les tendances épidémiologiques et d’anticiper les crises sanitaires.</p>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <!-- tp-platform-area-end -->
+
+            <!-- tp-price-area-start -->
+
+            <!-- tp-price-area-end -->
+
+            <!-- tp-team-area-start -->
+
+            <!-- tp-team-area-end -->
+
+            <!-- tp-cta-area-start -->
+            <div class="tp-plan-area black-bg tp-plan-space">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-xl-7 col-lg-7 wow tpfadeLeft" data-wow-duration=".9s" data-wow-delay=".3s">
+                            <div class="tp-plan-img-box p-relative">
+                                <div class="tp-plan-img-1">
+                                    <img src="{% static 'assets/img/ipcilogin.png' %}" alt="">
+                                </div>
+                                <div class="tp-plan-img-2 d-none d-sm-block">
+                                    <img width="100px" src="{% static 'assets/img/plan/plan-2.png' %}" alt="">
+                                </div>
+{#                                <div class="tp-plan-img-3 d-none d-sm-block">#}
+{#                                    <img src="{% static 'assets/img/cap1.png' %}" alt="">#}
+{#                                </div>#}
+                                <div class="tp-plan-img-4">
+                                    <img src="{% static 'assets/img/plan/plan-4.png' %}" alt="">
+                                </div>
+                                <div class="tp-plan-img-5">
+                                    <img src="{% static 'assets/img/plan/plan-5.png' %}" alt="">
+                                </div>
+                                <div class="tp-plan-img-6 d-none d-sm-block">
+                                    <img src="{% static 'assets/img/plan/plan-6.png' %}" alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-5 col-lg-5 wow tpfadeRight" data-wow-duration=".9s" data-wow-delay=".5s">
+                            <div class="tp-plan-section-box">
+                                <div class="tp-plan-section-icon pb-30">
+                                    <img src="{% static 'assets/img/cta/cta-title-icon-1.png' %}" alt="">
+                                </div>
+                                <span class="tp-section-subtitle-5" >solutions d’analyse de données avancées</span>
+                                <h3 class="tp-section-title-5 pb-15"><span>Enterprise</span><br>et Organism.
+                                </h3>
+                                <p class=" mb-0 pb-30" style="color: orangered">Les données sont au cœur de la prise de décision moderne
+                                </p>
+                                <div class="tp-plan-feature">
+                                    <ul>
+                                        <li style="color: white"><i class="far fa-check" style="color: orangered"></i>Améliorer vos performances</li>
+                                        <li style="color: white"><i class="far fa-check" style="color: orangered"></i>Identifier les tendances </li>
+                                        <li style="color: white"><i class="far fa-check" style="color: orangered"></i>Prendre des décisions stratégiques</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- tp-cta-area-end -->
+
+            <!-- tp-Security-area-end -->
+            <div class="tp-security-area blue-bg pb-180 fix z-index">
+               <div class="container-fluid g-0">
+                  <div class="row justify-content-center">
+                     <div class="col-xl-8">
+                        <div class="tp-security-section-box text-center pb-100">
+                           <h5 class="tp-section-subtitle-4 both pb-10 wow tpfadeUp" data-wow-duration=".9s"
+                              data-wow-delay=".3s">SECTEUR D'ACTIVITE</h5>
+                           <h4 class="tp-section-title-4">Secteurs d'Intervention</h4>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="tp-security-slider-wrapper wow tpfadeUp" data-wow-duration=".9s" data-wow-delay=".7s">
+                     <div class="tp-security-slider-active">
+                        <div class="tp-security-main">
+                           <div id="slideshow"
+                              class="tp-security-wrapper d-flex align-items-center justify-content-between">
+                              <div class="tp-security-item d-flex align-items-center">
+                                 <div class="tp-security-img">
+                                    <img src="{% static 'assets/img/security/security-1.png' %}" alt="">
+                                 </div>
+                                 <div class="tp-security-content">
+                                    <h4 class="tp-security-title-sm">Business <br> & Analyses</h4>
+                                 </div>
+                              </div>
+                              <div class="tp-security-link">
+                                 <a href="#">
+                                    <svg width="10" height="19" viewBox="0 0 10 19" fill="none"
+                                       xmlns="http://www.w3.org/2000/svg">
+                                       <path d="M1 17.0112L9 9.01123L1 1.01123" stroke="currentColor" stroke-width="2"
+                                          stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                 </a>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="tp-security-main">
+                           <div class="tp-security-wrapper d-flex align-items-center justify-content-between">
+                              <div class="tp-security-item d-flex align-items-center">
+                                 <div class="tp-security-img">
+                                    <img src="{% static 'assets/img/security/security-2.png' %}" alt="">
+                                 </div>
+                                 <div class="tp-security-content">
+                                    <h4 class="tp-security-title-sm">Formations <br> Education</h4>
+                                 </div>
+                              </div>
+                              <div class="tp-security-link">
+                                 <a href="#">
+                                    <svg width="10" height="19" viewBox="0 0 10 19" fill="none"
+                                       xmlns="http://www.w3.org/2000/svg">
+                                       <path d="M1 17.0112L9 9.01123L1 1.01123" stroke="currentColor" stroke-width="2"
+                                          stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                 </a>
+                              </div>
+                           </div>
+                        </div>
+
+                        <div class="tp-security-main">
+                           <div class="tp-security-wrapper d-flex align-items-center justify-content-between">
+                              <div class="tp-security-item d-flex align-items-center">
+                                 <div class="tp-security-img">
+                                    <img src="{% static 'assets/img/security/security-4.png' %}" alt="">
+                                 </div>
+                                 <div class="tp-security-content">
+                                    <h4 class="tp-security-title-sm">Securité <br> & Protections</h4>
+                                 </div>
+                              </div>
+                              <div class="tp-security-link">
+                                 <a href="#">
+                                    <svg width="10" height="19" viewBox="0 0 10 19" fill="none"
+                                       xmlns="http://www.w3.org/2000/svg">
+                                       <path d="M1 17.0112L9 9.01123L1 1.01123" stroke="currentColor" stroke-width="2"
+                                          stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                 </a>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="tp-security-main">
+                           <div class="tp-security-wrapper d-flex align-items-center justify-content-between">
+                              <div class="tp-security-item d-flex align-items-center">
+                                 <div class="tp-security-img">
+                                    <img src="{% static 'assets/img/security/security-5.png' %}" alt="">
+                                 </div>
+                                 <div class="tp-security-content">
+                                    <h4 class="tp-security-title-sm">Intélligence </br>Artifficielle</h4>
+                                 </div>
+                              </div>
+                              <div class="tp-security-link">
+                                 <a href="#">
+                                    <svg width="10" height="19" viewBox="0 0 10 19" fill="none"
+                                       xmlns="http://www.w3.org/2000/svg">
+                                       <path d="M1 17.0112L9 9.01123L1 1.01123" stroke="currentColor" stroke-width="2"
+                                          stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                 </a>
+                              </div>
+                           </div>
+                        </div>
+
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <!-- tp-Security-area-end -->
+
+            <!-- tp-blog-area-start -->
+            <div class="tp-blog-area black-bg pb-90">
+               <div class="container">
+                  <div class="row align-items-end tp-blog-four-section-space">
+                     <div class="col-xl-6 col-lg-6">
+                        <div class="tp-blog-four-section-box">
+                           <h5 class="tp-section-subtitle-4 pb-10" style="color: orangered">Informations utiles</h5>
+                           <h3 class="tp-section-title-4">Blog & divers</h3>
+                        </div>
+                     </div>
+                     <div class="col-xl-6 col-lg-6 wow tpfadeRight" data-wow-duration=".9s" data-wow-delay=".5s">
+                        <div class="tp-blog-four-btn text-start text-lg-end">
+                           <a class="tp-btn-yellow-border" href="#" style="color: orangered">Voir plus <i class="far fa-angle-right"></i></a>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                      {% for article in articles %}
+                     <div class="col-xl-6 col-lg-6 col-md-6 mb-40 wow tpfadeUp" data-wow-duration=".9s"
+                        data-wow-delay=".7s">
+                        <div class="tp-blog-four-item p-relative fix">
+                           <div class="tp-blog-four-img fix">
+                              <a href="#"><img src="{{ article.thumbnail.url }}" alt=""></a>
+                           </div>
+                           <div class="tp-blog-four-content-wrapper">
+                              <div class="tp-blog-four-meta">
+                                 <span class="child-1">{{ article.category}}</span>
+                                 <span class="child-2">{{ article.created_at|naturaltime }}</span>
+                              </div>
+                              <div class="tp-blog-four-info">
+                                 <h4 class="tp-blog-four-title-sm"><a href="#">{{ article.title }}</a></h4>
+                                 <p>{{ article.description }}</p>
+                              </div>
+                              <div class="tp-blog-four-btn">
+                                 <a class="tp-btn-service" href="{% url 'article_detail' article.pk %}">Voir plus</a>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                      {% endfor %}
+
+
+                  </div>
+               </div>
+            </div>
+            <!-- tp-blog-area-end -->
+
+            <!-- tp-contact-area-start -->
+            <div class="tp-contact-area tp-contact-overlay pt-120 pb-120 black-bg z-index p-relative fix">
+               <div class="tp-contact-glob-img">
+                  <img src="{% static 'assets/img/hero/hero-4-3.png' %}" alt="">
+               </div>
+               <div class="container">
+                  <div class="row">
+                     <div class="col-xl-5 col-12 z-index-3">
+                        <div class="tp-contact-section-box pb-25">
+                           <h5 class="tp-section-subtitle-4 pb-10 " style="color: orangered">CONTACTEZ NOUS</h5>
+                           <h4 class="tp-section-title-3" style="color: white">Demandez gratuitement l'avis d'un expert</h4>
+                        </div>
+                        <div class="tp-contact-info-box tp-title-anim">
+                           <ul>
+                              <li>
+                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                       d="M13.2227 1C13.2227 1 15.9115 1.24444 19.3336 4.66659C22.7558 8.08874 23.0002 10.7776 23.0002 10.7776"
+                                       stroke="#F8FF35" stroke-width="1.5" stroke-linecap="round" />
+                                    <path
+                                       d="M13.4756 5.32031C13.4756 5.32031 14.6855 5.666 16.5004 7.48087C18.3152 9.29574 18.6609 10.5056 18.6609 10.5056"
+                                       stroke="#F8FF35" stroke-width="1.5" stroke-linecap="round" />
+                                    <path
+                                       d="M1.00801 8.25232C0.919597 10.5844 1.50981 14.545 5.48265 18.5178C6.44111 19.4762 7.39885 20.2378 8.33317 20.8405M2.8795 4.59079C4.58196 2.88834 7.29819 3.11708 8.37912 5.05393L9.17234 6.47526C9.88818 7.75793 9.60081 9.44058 8.47337 10.568C8.47337 10.568 8.47337 10.568 8.47337 10.568C8.47325 10.5681 7.10592 11.9357 9.58533 14.4151C12.0641 16.8939 13.4316 15.5279 13.4324 15.5271C13.4324 15.527 13.4324 15.5271 13.4325 15.527C14.5599 14.3996 16.2425 14.1123 17.5252 14.8281L18.9465 15.6213C20.8834 16.7023 21.1121 19.4185 19.4097 21.1209C18.3867 22.1439 17.1335 22.9399 15.7481 22.9924C14.7532 23.0302 13.4619 22.9444 11.9998 22.5251"
+                                       stroke="#F8FF35" stroke-width="1.5" stroke-linecap="round" />
+                                 </svg>
+                                 <a href="tel:(+44)7976568112">
+                (+44) 79 76 568 112 <br></a>
+                              </li>
+                              <li>
+                                 <svg width="20" height="20" viewBox="0 0 18 18" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                       d="M6.6 8.99922C6.6 9.44105 6.24183 9.79922 5.8 9.79922C5.35817 9.79922 5 9.44105 5 8.99922C5 8.55739 5.35817 8.19922 5.8 8.19922C6.24183 8.19922 6.6 8.55739 6.6 8.99922Z"
+                                       fill="#F8FF35" />
+                                    <path
+                                       d="M9.8 8.99922C9.8 9.44105 9.44183 9.79922 9 9.79922C8.55817 9.79922 8.2 9.44105 8.2 8.99922C8.2 8.55739 8.55817 8.19922 9 8.19922C9.44183 8.19922 9.8 8.55739 9.8 8.99922Z"
+                                       fill="#F8FF35" />
+                                    <path
+                                       d="M13 8.99922C13 9.44105 12.6418 9.79922 12.2 9.79922C11.7582 9.79922 11.4 9.44105 11.4 8.99922C11.4 8.55739 11.7582 8.19922 12.2 8.19922C12.6418 8.19922 13 8.55739 13 8.99922Z"
+                                       fill="#F8FF35" />
+                                    <path
+                                       d="M13 2.07026C11.8233 1.38958 10.4571 1 9 1C4.58172 1 1 4.58172 1 9C1 10.2797 1.30049 11.4893 1.83477 12.562C1.97675 12.847 2.02401 13.1729 1.94169 13.4805L1.46521 15.2613C1.25836 16.0344 1.96561 16.7416 2.73868 16.5348L4.51951 16.0583C4.82715 15.976 5.15297 16.0233 5.43802 16.1652C6.51069 16.6995 7.72025 17 9 17C13.4183 17 17 13.4183 17 9C17 7.54285 16.6104 6.17669 15.9297 5"
+                                       stroke="#F8FF35" stroke-width="1.5" stroke-linecap="round" />
+                                 </svg>
+                                 <a href="mailto:contact@afriqconsulting.com">contact@afriqconsulting.com</a>
+                              </li>
+                              <li>
+                                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                       d="M3.69922 6.86317C3.69922 3.62503 6.51983 1 9.99922 1C13.4786 1 16.2992 3.62503 16.2992 6.86317C16.2992 10.0759 14.2885 13.8249 11.1513 15.1656C10.4199 15.4781 9.57849 15.4781 8.84716 15.1656C5.70996 13.8249 3.69922 10.0759 3.69922 6.86317Z"
+                                       stroke="#F8FF35" stroke-width="1.5" />
+                                    <path
+                                       d="M11.7992 7.3C11.7992 8.29411 10.9933 9.1 9.99922 9.1C9.00511 9.1 8.19922 8.29411 8.19922 7.3C8.19922 6.30589 9.00511 5.5 9.99922 5.5C10.9933 5.5 11.7992 6.30589 11.7992 7.3Z"
+                                       stroke="#F8FF35" stroke-width="1.5" />
+                                    <path
+                                       d="M18.0645 13.1504C18.6633 13.6926 19 14.3038 19 14.9504C19 17.1871 14.9706 19.0004 10 19.0004C5.02944 19.0004 1 17.1871 1 14.9504C1 14.3038 1.33671 13.6926 1.93552 13.1504"
+                                       stroke="#F8FF35" stroke-width="1.5" stroke-linecap="round" />
+                                 </svg>
+                                 <a href="https://www.google.com/maps/place/Argentina,+Santiago+del+Estero+Province,+Argentina/@-28.9465488,-65.3732971,7.53z/data=!4m5!3m4!1s0x9436ede70248f47b:0x3bdbc4e928700c2a!8m2!3d-29.5355289!4d-62.2664853"
+                                    target="_blank"> 
+                Abidjan Cocody Riviera Palmeraie
+               www.afriqconsulting.com</a>
+
+
+                              </li>
+                           </ul>
+                            <a class="tp-btn-border wow tpfadeRight" data-wow-duration=".9s" data-wow-delay=".7s" href="{% url 'contact' %}"><span>Contactez-nous<i class="far fa-angle-right"></i></span></a>
+                        </div>
+                     </div>
+                     <div class="col-xl-7 col-12 ">
+                        <div class="tp-contact-input-wrapperrr p-relative">
+                           <div class="tp-contact-shape">
+                              <img src="{% static 'assets/img/contact/shape-4-1.png' %}" alt="">
+                           </div>
+                           <div class="tp-contact-input-wrapper p-relative">
+                              <div class="row">
+
+<video width="600" id="veilleVideo" src="{% static 'assets/img/ipciflou - SD 480p.mov' %}" autoplay muted></video>
+
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <!-- tp-contact-area-end -->
+<script>
+ document.addEventListener("DOMContentLoaded", function() {
+    const video = document.getElementById("veilleVideo");
+
+    // Définir la vitesse de lecture, par exemple 1.5x pour une lecture 50% plus rapide
+    video.playbackRate = 1.5;
+
+    // Démarre automatiquement en mode muet pour éviter que certains navigateurs bloquent l'autoplay
+    video.muted = true;
+
+    // Désactiver le clic droit
+    video.addEventListener("contextmenu", function(e) {
+      e.preventDefault();
+    });
+  });
+</script>
+         </main>
+{% endblock centrale %}

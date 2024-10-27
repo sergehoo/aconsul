@@ -1,0 +1,139 @@
+{% load static %}
+<!doctype html>
+<html class="no-js" lang="zxx">
+
+<head>
+   <meta charset="utf-8">
+   <meta http-equiv="x-ua-compatible" content="ie=edge">
+   <title>AFRIQ CONSULTING - TRUSTED PARTNER FOR DIGITAL TRANSFORMATION</title>
+   <meta name="description" content="">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+   <!-- Place favicon.ico in the root directory -->
+   <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/img/favicon.png' %}">
+
+   <!-- CSS here -->
+   <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css'%}">
+   <link rel="stylesheet" href="{% static 'assets/css/animate.css'%}">
+   <link rel="stylesheet" href="{% static 'assets/css/custom-animation.css'%}">
+   <link rel="stylesheet" href="{% static 'assets/css/slick.css'%}">
+   <link rel="stylesheet" href="{% static 'assets/css/nice-select.css'%}">
+   <link rel="stylesheet" href="{% static 'assets/css/flaticon.css'%}">
+   <link rel="stylesheet" href="{% static 'assets/css/swiper-bundle.css'%}">
+   <link rel="stylesheet" href="{% static 'assets/css/meanmenu.css'%}">
+   <link rel="stylesheet" href="{% static 'assets/css/font-awesome-pro.css'%}">
+   <link rel="stylesheet" href="{% static 'assets/css/magnific-popup.css'%}">
+   <link rel="stylesheet" href="{% static 'assets/css/spacing.css'%}">
+   <link rel="stylesheet" href="{% static 'assets/css/style.css'%}">
+</head>
+
+<body>
+
+   <!-- preloader -->
+   <div id="preloader">
+      <div class="preloader">
+         <span></span>
+         <span></span>
+      </div>
+   </div>
+   <!-- preloader end  -->
+
+
+   <!-- back-to-top-start  -->
+   <button class="scroll-top scroll-to-target" data-target="html">
+      <i class="far fa-angle-double-up"></i>
+   </button>
+   <!-- back-to-top-end  -->
+
+{% include 'layout/header.html' %}
+
+   <!-- tp-offcanvus-area-start -->
+   <div class="tpoffcanvas-area">
+      <div class="tpoffcanvas">
+         <div class="tpoffcanvas__close-btn">
+            <button class="close-btn"><i class="fal fa-times"></i></button>
+         </div>
+         <div class="tpoffcanvas__logo text-center">
+            <a href="{% url 'home' %}">
+              <img src="{% static 'assets/img/logo/logo-web-2.png' %}" alt="">
+            </a>
+         </div>
+         <div class="mobile-menu"></div>
+{#         <div class="tpoffcanvas__instagram text-center">#}
+{#            <div class="tpoffcanvas__instagram-title">#}
+{#               <h4>instagram</h4>#}
+{#            </div>#}
+{#            <a href="#"><img src="{% static 'assets/img/project/project-inner-4.jpg' %}" alt=""></a>#}
+{#            <a href="#"><img src="{% static 'assets/img/project/project-inner-5.jpg' %}" alt=""></a>#}
+{#            <a href="#"><img src="{% static 'assets/img/project/project-inner-6.jpg' %}" alt=""></a>#}
+{#            <a href="#"><img src="{% static 'assets/img/project/project-inner-7.jpg' %}" alt=""></a>#}
+{#         </div>#}
+         <div class="tpoffcanvas__info text-center">
+            <h4 class="offcanva-title">Adresse</h4>
+            <a href="https://www.google.com/maps/@23.506657,90.3443647,7z" target="_blank">
+               (+225) 0575355286 <br>
+                (+44) 7976568112 <br>
+                Abidjan Cocody Riviera Palmeraie
+               www.afriqconsulting.com
+            </a>
+         </div>
+         <div class="tpoffcanvas__social">
+            <div class="social-icon text-center">
+{#               <a href="#"><i class="fab fa-twitter"></i></a>#}
+{#               <a href="#"><i class="fab fa-instagram"></i></a>#}
+               <a href="#"><i class="fab fa-facebook-square"></i></a>
+               <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="body-overlay"></div>
+   <!-- tp-offcanvus-area-end -->
+
+
+   <div id="smooth-wrapper">
+       <div id="smooth-content">
+
+
+           {% block centrale %}
+
+           {% endblock centrale %}
+
+           <footer>
+
+            <!-- tp-footer-area-start -->
+          {% include 'layout/footer.html' %}
+            <!-- tp-footer-area-end -->
+
+         </footer>
+      </div>
+   </div>
+
+
+
+   <!-- JS here -->
+   <script src="{% static 'assets/js/jquery.js' %}"></script>
+   <script src="{% static 'assets/js/waypoints.js' %}"></script>
+   <script src="{% static 'assets/js/bootstrap.bundle.min.js' %}"></script>
+   <script src="{% static 'assets/js/slick.min.js' %}"></script>
+   <script src="{% static 'assets/js/magnific-popup.js' %}"></script>
+   <script src="{% static 'assets/js/counterup.js' %}"></script>
+   <script src="{% static 'assets/js/wow.js' %}"></script>
+   <script src="{% static 'assets/js/nice-select.js' %}"></script>
+   <script src="{% static 'assets/js/swiper-bundle.js' %}"></script>
+   <script src="{% static 'assets/js/meanmenu.js' %}"></script>
+   <script src="{% static 'assets/js/tilt.jquery.js' %}"></script>
+   <script src="{% static 'assets/js/isotope-pkgd.js' %}"></script>
+   <script src="{% static 'assets/js/purecounter.js' %}"></script>
+   <script src="{% static 'assets/js/imagesloaded-pkgd.js' %}"></script>
+   <script src="{% static 'assets/js/ajax-form.js' %}"></script>
+   <script src="{% static 'assets/js/gsap.min.js' %}"></script>
+   <script src="{% static 'assets/js/split-text.min.js' %}"></script>
+   <script src="{% static 'assets/js/ScrollTrigger.min.js' %}"></script>
+   <script src="{% static 'assets/js/ScrollSmoother.min.js' %}"></script>
+   <script src="{% static 'assets/js/main.js' %}"></script>
+
+
+</body>
+
+</html>
