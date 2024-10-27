@@ -1,0 +1,24 @@
+services:
+  afriqconsultingweb:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 2724:8000  # Map the local port 2724 to the container port 8000
+    volumes:
+      - .:/afriqconsulting/  # Mount the entire project directory
+      - static_volume:/afriqconsulting/static  # Persistent storage for static files
+      - media_volume:/afriqconsulting/media  # Persistent storage for media files
+      - sqlite_data:/afriqconsulting/db.sqlite3  # Persistent storage for SQLite database file
+    env_file:
+      - ./.env
+    restart: always
+
+networks:
+  aq_default:
+    external: true
+
+volumes:
+  static_volume:
+  media_volume:
+  sqlite_data:
