@@ -9,7 +9,7 @@ services:
       - .:/afriqconsulting/  # Mount the entire project directory
       - static_volume:/afriqconsulting/static  # Persistent storage for static files
       - media_volume:/afriqconsulting/media  # Persistent storage for media files
-      - sqlite_data:/afriqconsulting/db.sqlite3  # Persistent storage for SQLite database file
+      - ./db.sqlite3:/afriqconsulting/db.sqlite3  # Explicitly mount the SQLite database file
     env_file:
       - ./.env
     restart: always
@@ -21,4 +21,3 @@ networks:
 volumes:
   static_volume:
   media_volume:
-  sqlite_data:
