@@ -22,7 +22,7 @@ from django.urls import path, include
 from webhome.views import HomePageView, ArticleDetailView, contact_view, ServiceDetailView
 
 urlpatterns = [
-                  path('admin/', admin.site.urls),
+                  path('admin-console/', admin.site.urls),
                   # path('newsletter/', include('newsletter.urls')),
                   path('', HomePageView.as_view(), name='home'),
                   path('article_detail/<int:pk>/', ArticleDetailView.as_view(), name='article_detail'),
