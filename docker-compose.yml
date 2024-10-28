@@ -8,8 +8,8 @@ services:
     volumes:
       - .:/afriqconsulting/  # Mount the entire project directory
       - static_volume:/afriqconsulting/static  # Persistent storage for static files
-      - static_volume:/afriqconsulting/static  # Persistent storage for static files
       - media_volume:/afriqconsulting/media  # Persistent storage for media files
+      - logs_volume:/afriqconsulting/static/logs  # Mount logs volume
       - ./db.sqlite3:/afriqconsulting/db.sqlite3  # Explicitly mount the SQLite database file
     env_file:
       - ./.env
@@ -22,3 +22,4 @@ networks:
 volumes:
   static_volume:
   media_volume:
+  logs_volume:  # Add a new volume for logs
