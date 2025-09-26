@@ -1,56 +1,5 @@
-services:
-  afriqconsultingweb:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    volumes:
-      - .:/afriqconsulting/
-      - static_volume:/afriqconsulting/static
-      - staticfiles_volume:/afriqconsulting/staticfiles
-      - media_volume:/afriqconsulting/media
-      - logs_volume:/afriqconsulting/logs
-      - ./db.sqlite3:/afriqconsulting/db.sqlite3
-    env_file:
-      - ./.env
-    restart: always
-    networks:
-      - default
-      - proxy
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=proxy"
-
-      # === HTTPS (apex) ===
-      - "traefik.http.routers.afriqweb.rule=Host(`afriqconsulting.com`)"
-      - "traefik.http.routers.afriqweb.entrypoints=websecure"
-      - "traefik.http.routers.afriqweb.tls=true"
-      - "traefik.http.routers.afriqweb.tls.certresolver=lets"
-      - "traefik.http.routers.afriqweb.service=afriqweb"
-
-      # === HTTPS (www) → même service ===
-      - "traefik.http.routers.afriqweb-www.rule=Host(`www.afriqconsulting.com`)"
-      - "traefik.http.routers.afriqweb-www.entrypoints=websecure"
-      - "traefik.http.routers.afriqweb-www.tls=true"
-      - "traefik.http.routers.afriqweb-www.tls.certresolver=lets"
-      - "traefik.http.routers.afriqweb-www.service=afriqweb"
-
-      # === Service (port interne) ===
-      - "traefik.http.services.afriqweb.loadbalancer.server.port=8000"
-
-      # === HTTP → HTTPS (optionnel mais recommandé) ===
-      - "traefik.http.routers.afriqweb-http.rule=Host(`afriqconsulting.com`,`www.afriqconsulting.com`)"
-      - "traefik.http.routers.afriqweb-http.entrypoints=web"
-      - "traefik.http.routers.afriqweb-http.middlewares=redir-https"
-      - "traefik.http.middlewares.redir-https.redirectscheme.scheme=https"
-
-    healthcheck:
-      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:8000/healthz || exit 1"]
-      interval: 30s
-      timeout: 5s
-      retries: 3
-
 networks:
-  default:
+  acnetwork:
     driver: bridge
   proxy:
     external: true
@@ -60,3 +9,61 @@ volumes:
   staticfiles_volume:
   media_volume:
   logs_volume:
+
+services:
+  afriqconsultingweb:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: >
+      gunicorn afriqconsulting.wsgi:application
+      --bind 0.0.0.0:8000
+      --workers 2 --threads 2
+      --timeout 60
+      --log-level warning
+    env_file: [.env]
+    volumes:
+      - .:/afriqconsulting
+      - static_volume:/afriqconsulting/static
+      - staticfiles_volume:/afriqconsulting/staticfiles
+      - media_volume:/afriqconsulting/media
+      - logs_volume:/afriqconsulting/logs
+      # ⚠️ Dev/démo uniquement
+      - ./db.sqlite3:/afriqconsulting/db.sqlite3
+    restart: unless-stopped
+    networks: [acnetwork, proxy]
+    healthcheck:
+      # évite curl si non présent
+      test: ["CMD-SHELL", "python - <<'PY'\nimport urllib.request,sys\ntry:\n  urllib.request.urlopen('http://127.0.0.1:8000/healthz', timeout=2)\n  sys.exit(0)\nexcept Exception:\n  sys.exit(1)\nPY"]
+      interval: 10s
+      timeout: 3s
+      retries: 12
+      start_period: 40s
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+
+      # Router HTTPS (apex)
+      - traefik.http.routers.afriq.rule=Host(`afriqconsulting.com`)
+      - traefik.http.routers.afriq.entrypoints=websecure
+      - traefik.http.routers.afriq.tls.certresolver=lets
+
+      # Service → port interne
+      - traefik.http.services.afriq.loadbalancer.server.port=8000
+      - traefik.http.services.afriq.loadbalancer.server.scheme=http
+
+      # Middlewares (utilise ceux déjà déclarés côté Traefik, comme pour smitci)
+      - traefik.http.routers.afriq.middlewares=sec-headers@docker,compress@docker,ratelimit@docker
+
+      # (Optionnel) Router HTTP pour rediriger en HTTPS
+      - traefik.http.routers.afriq-http.rule=Host(`afriqconsulting.com`,`www.afriqconsulting.com`)
+      - traefik.http.routers.afriq-http.entrypoints=web
+      - traefik.http.routers.afriq-http.middlewares=redir-https
+      - traefik.http.middlewares.redir-https.redirectscheme.scheme=https
+
+      # (Optionnel) Router HTTPS pour www
+      - traefik.http.routers.afriq-www.rule=Host(`www.afriqconsulting.com`)
+      - traefik.http.routers.afriq-www.entrypoints=websecure
+      - traefik.http.routers.afriq-www.tls.certresolver=lets
+      - traefik.http.routers.afriq-www.service=afriq
+      - traefik.http.routers.afriq-www.middlewares=sec-headers@docker,compress@docker,ratelimit@docker
