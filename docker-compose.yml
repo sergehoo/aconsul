@@ -28,11 +28,11 @@ services:
       - "traefik.http.routers.afriqweb.service=afriqweb"
 
       # === HTTPS (www) → même service ===
-      - "traefik.http.routers.afriqweb-www.rule=Host(`www.afriqconsulting.com`)"
-      - "traefik.http.routers.afriqweb-www.entrypoints=websecure"
-      - "traefik.http.routers.afriqweb-www.tls=true"
-      - "traefik.http.routers.afriqweb-www.tls.certresolver=lets"
-      - "traefik.http.routers.afriqweb-www.service=afriqweb"
+#      - "traefik.http.routers.afriqweb-www.rule=Host(`www.afriqconsulting.com`)"
+#      - "traefik.http.routers.afriqweb-www.entrypoints=websecure"
+#      - "traefik.http.routers.afriqweb-www.tls=true"
+#      - "traefik.http.routers.afriqweb-www.tls.certresolver=lets"
+#      - "traefik.http.routers.afriqweb-www.service=afriqweb"
 
       # === Service (port interne) ===
       - "traefik.http.services.afriqweb.loadbalancer.server.port=8000"
