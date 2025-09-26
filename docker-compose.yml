@@ -23,7 +23,6 @@ services:
       # === HTTPS (apex) ===
       - "traefik.http.routers.afriqweb.rule=Host(`afriqconsulting.com`)"
       - "traefik.http.routers.afriqweb.entrypoints=websecure"
-      - "traefik.http.routers.afriqweb.tls=true"
       - "traefik.http.routers.afriqweb.tls.certresolver=lets"
       - "traefik.http.routers.afriqweb.service=afriqweb"
 
@@ -36,6 +35,8 @@ services:
 
       # === Service (port interne) ===
       - "traefik.http.services.afriqweb.loadbalancer.server.port=8000"
+      - "traefik.http.routers.afriqweb.middlewares=sec-headers@docker,compress@docker,ratelimit@docker"
+
 
       # === Middlewares (compression + headers sécurité) ===
 #      - "traefik.http.routers.afriqweb.middlewares=afriqweb-compress,afriqweb-sec"
