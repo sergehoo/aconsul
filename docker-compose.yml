@@ -8,46 +8,51 @@ services:
       - static_volume:/afriqconsulting/static
       - staticfiles_volume:/afriqconsulting/staticfiles
       - media_volume:/afriqconsulting/media
-      - logs_volume:/afriqconsulting/static/logs
+      - logs_volume:/afriqconsulting/logs
+      # ⚠️ En prod, éviter sqlite. Si tu restes dessus, garde le bind-mount :
       - ./db.sqlite3:/afriqconsulting/db.sqlite3
     env_file:
       - ./.env
     restart: always
     networks:
       - default
-      - proxy   # 🔗 Réseau partagé avec Traefik
+      - proxy
     labels:
-      - "traefik.docker.network=proxy"
       - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
 
-      # === Router HTTPS principal ===
+      # === HTTPS (apex) ===
       - "traefik.http.routers.afriqweb.rule=Host(`afriqconsulting.com`)"
       - "traefik.http.routers.afriqweb.entrypoints=websecure"
       - "traefik.http.routers.afriqweb.tls=true"
       - "traefik.http.routers.afriqweb.tls.certresolver=lets"
-
-      # (Optionnel) Router HTTP -> redirection vers HTTPS
-#      - "traefik.http.routers.afriqweb-http.rule=Host(`afriqconsulting.com`)"
-#      - "traefik.http.routers.afriqweb-http.entrypoints=web"
-#      - "traefik.http.routers.afriqweb-http.middlewares=afriqweb-https-redirect"
-#      - "traefik.http.middlewares.afriqweb-https-redirect.redirectscheme.scheme=https"
-
-      # === Service (port interne du conteneur) ===
-      - "traefik.http.services.afriqweb.loadbalancer.server.port=8000"
       - "traefik.http.routers.afriqweb.service=afriqweb"
 
-      # Middlewares utiles (compression + headers)
+      # === HTTPS (www) → même service ===
+      - "traefik.http.routers.afriqweb-www.rule=Host(`www.afriqconsulting.com`)"
+      - "traefik.http.routers.afriqweb-www.entrypoints=websecure"
+      - "traefik.http.routers.afriqweb-www.tls=true"
+      - "traefik.http.routers.afriqweb-www.tls.certresolver=lets"
+      - "traefik.http.routers.afriqweb-www.service=afriqweb"
+
+      # === Service (port interne) ===
+      - "traefik.http.services.afriqweb.loadbalancer.server.port=8000"
+
+      # === HTTP → HTTPS redir ===
+      - "traefik.http.routers.afriqweb-http.rule=Host(`afriqconsulting.com`,`www.afriqconsulting.com`)"
+      - "traefik.http.routers.afriqweb-http.entrypoints=web"
+      - "traefik.http.routers.afriqweb-http.middlewares=afriqweb-https-redirect"
+      - "traefik.http.middlewares.afriqweb-https-redirect.redirectscheme.scheme=https"
+
+      # === Middlewares (compression + headers sécurité) ===
       - "traefik.http.routers.afriqweb.middlewares=afriqweb-compress,afriqweb-sec"
+      - "traefik.http.routers.afriqweb-www.middlewares=afriqweb-compress,afriqweb-sec"
       - "traefik.http.middlewares.afriqweb-compress.compress=true"
       - "traefik.http.middlewares.afriqweb-sec.headers.stsSeconds=31536000"
       - "traefik.http.middlewares.afriqweb-sec.headers.stsIncludeSubdomains=true"
       - "traefik.http.middlewares.afriqweb-sec.headers.stsPreload=true"
       - "traefik.http.middlewares.afriqweb-sec.headers.contentTypeNosniff=true"
-      - "traefik.http.middlewares.afriqweb-sec.headers.browserXssFilter=true"
       - "traefik.http.middlewares.afriqweb-sec.headers.referrerPolicy=no-referrer-when-downgrade"
-
-      # Traefik doit utiliser le bon réseau
-
 
     healthcheck:
       test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:8000/healthz || exit 1"]
@@ -56,12 +61,9 @@ services:
       retries: 3
 
 networks:
-  default:
-    # ton réseau interne au compose
+  default: {}
   proxy:
-    external: true   # ⚠️ Doit exister et être le même que celui de Traefik
-  aq_default:
-    external: true   # si tu veux le garder pour d'autres services/compatibilité
+    external: true
 
 volumes:
   static_volume:

@@ -17,11 +17,19 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.http import JsonResponse
 from django.urls import path, include
 
 from webhome.views import HomePageView, ArticleDetailView, contact_view, ServiceDetailView
 
+
+def healthz(_):
+    # ⚡ rapide : sans requête DB
+    return JsonResponse({"status": "ok"})
+
+
 urlpatterns = [
+                  path("healthz", healthz),
                   path('admin-console/', admin.site.urls),
                   # path('newsletter/', include('newsletter.urls')),
                   path('', HomePageView.as_view(), name='home'),
