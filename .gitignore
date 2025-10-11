@@ -1,11 +1,11 @@
 .env
 .dockerignore
-.docker-compose.yml
-.Dockerfile
+#.docker-compose.yml
+#.Dockerfile
 # Ignore Docker Compose files
-docker-compose.yml
+#docker-compose.yml
 #docker-compose*.yml
 
-Dockerfile
+#Dockerfile
 
 # Ignore .env files
