@@ -15,7 +15,7 @@ USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Redirection HTTPS (optionnel mais recommandé en prod)
-SECURE_SSL_REDIRECT = True
+# SECURE_SSL_REDIRECT = True
 
 # CSRF/CORS (pointe sur ton domaine HTTPS) — pilote via .env
 CSRF_TRUSTED_ORIGINS = config(
