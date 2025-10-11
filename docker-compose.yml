@@ -63,11 +63,11 @@ except Exception: sys.exit(1)\""
       - traefik.http.routers.afriq.middlewares=sec-headers@docker,compress@docker,ratelimit@docker
 
       # Router HTTPS pour www (optionnel mais recommandé)
-      - traefik.http.routers.afriq-www.rule=Host(`www.afriqconsulting.com`)
-      - traefik.http.routers.afriq-www.entrypoints=websecure
-      - traefik.http.routers.afriq-www.tls.certresolver=lets
-      - traefik.http.routers.afriq-www.service=afriq
-      - traefik.http.routers.afriq-www.middlewares=sec-headers@docker,compress@docker,ratelimit@docker
+#      - traefik.http.routers.afriq-www.rule=Host(`www.afriqconsulting.com`)
+#      - traefik.http.routers.afriq-www.entrypoints=websecure
+#      - traefik.http.routers.afriq-www.tls.certresolver=lets
+#      - traefik.http.routers.afriq-www.service=afriq
+#      - traefik.http.routers.afriq-www.middlewares=sec-headers@docker,compress@docker,ratelimit@docker
 
 #      # (Optionnel) Router HTTP → redirection HTTPS
 #      - traefik.http.routers.afriq-http.rule=Host(`afriqconsulting.com`,`www.afriqconsulting.com`)

@@ -10,8 +10,6 @@ SECRET_KEY = config('SECRET_KEY')
 ALLOWED_HOSTS = [
     'afriqconsulting.com',
     'www.afriqconsulting.com',
-    '89.116.157.191',
-    '89.116.157.191:2724',
 ]
 # ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='127.0.0.1,localhost', cast=lambda v: [s.strip() for s in v.split(',')])
 CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', default='', cast=lambda v: [s.strip() for s in v.split(',')])
