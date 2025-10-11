@@ -17,15 +17,14 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.urls import path, include
 
 from webhome.views import HomePageView, ArticleDetailView, contact_view, ServiceDetailView
 
 
-def healthz(_):
-    # ⚡ rapide : sans requête DB
-    return JsonResponse({"status": "ok"})
+def healthz(request):
+    return HttpResponse("ok", content_type="text/plain")
 
 
 urlpatterns = [

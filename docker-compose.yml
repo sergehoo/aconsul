@@ -16,8 +16,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    # Vous pouvez laisser la CMD par défaut du Dockerfile,
-    # ou surcharger ici si besoin (préférence: laisser l'ENTRYPOINT piloter).
     command: >
       gunicorn afriqconsulting.wsgi:application
       --bind 0.0.0.0:8000
@@ -29,13 +27,11 @@ services:
       --error-logfile /afriqconsulting/logs/gunicorn.error.log
     env_file: [.env]
     volumes:
-      # Monte le code pour dev/démo. En prod, COMME D’HABITUDE, retirez cette ligne.
       - .:/afriqconsulting
       - static_volume:/afriqconsulting/static
       - staticfiles_volume:/afriqconsulting/staticfiles
       - media_volume:/afriqconsulting/media
       - logs_volume:/afriqconsulting/logs
-      # ⚠️ Dev/démo uniquement pour SQLite (à retirer si Postgres)
       - ./db.sqlite3:/afriqconsulting/db.sqlite3
     restart: unless-stopped
     networks: [acnetwork, proxy]
