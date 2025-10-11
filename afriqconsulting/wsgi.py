@@ -1,20 +1,21 @@
-"""
-WSGI config for afriqconsulting project.
-
-It exposes the WSGI callable as a module-level variable named ``application``.
-
-For more information on this file, see
-https://docs.djangoproject.com/en/4.2/howto/deployment/wsgi/
-"""
-
+# afriqconsulting/afriqconsulting/wsgi.py
 import os
-
 from django.core.wsgi import get_wsgi_application
-from whitenoise import WhiteNoise
+from django.conf import settings
 
-from afriqconsulting.settings import BASE_DIR
-
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'afriqconsulting.settings')
+# Respecte l'ENV, fallback sur prod
+os.environ.setdefault(
+    "DJANGO_SETTINGS_MODULE",
+    os.getenv("DJANGO_SETTINGS_MODULE", "afriqconsulting.settings.prod")
+)
 
 application = get_wsgi_application()
-application = WhiteNoise(application, root=os.path.join(BASE_DIR, 'staticfiles'))
+
+# WhiteNoise est préférable en middleware.
+# Si tu veux garder l’enrobage WSGI, fais-le proprement:
+try:
+    from whitenoise import WhiteNoise
+    application = WhiteNoise(application, root=getattr(settings, "STATIC_ROOT", None))
+except Exception:
+    # WhiteNoise non installé ou STATIC_ROOT absent : ignore
+    pass
