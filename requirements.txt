@@ -1,6 +1,6 @@
 asgiref==3.8.1
 chardet==5.2.0
-Django==4.2.16
+django
 django-decouple==2.1
 django-humanize==0.1.2
 django-js-asset==2.2.0
