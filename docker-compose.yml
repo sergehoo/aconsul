@@ -13,6 +13,7 @@ volumes:
 
 services:
   afriqconsultingweb:
+    user: "0:0"
     build:
       context: .
       dockerfile: Dockerfile
@@ -22,9 +23,9 @@ services:
       --workers 2
       --threads 2
       --timeout 60
-      --log-level warning
-      --access-logfile /afriqconsulting/logs/gunicorn.access.log
-      --error-logfile /afriqconsulting/logs/gunicorn.error.log
+      --access-logfile -
+      --error-logfile -
+      --log-level info
     env_file: [.env]
     volumes:
       - .:/afriqconsulting
