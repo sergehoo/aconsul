@@ -1,3 +1,4 @@
+
 networks:
   acnetwork:
     driver: bridge
@@ -15,26 +16,37 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    # Vous pouvez laisser la CMD par défaut du Dockerfile,
+    # ou surcharger ici si besoin (préférence: laisser l'ENTRYPOINT piloter).
     command: >
       gunicorn afriqconsulting.wsgi:application
       --bind 0.0.0.0:8000
-      --workers 2 --threads 2
+      --workers 2
+      --threads 2
       --timeout 60
       --log-level warning
+      --access-logfile /afriqconsulting/logs/gunicorn.access.log
+      --error-logfile /afriqconsulting/logs/gunicorn.error.log
     env_file: [.env]
     volumes:
+      # Monte le code pour dev/démo. En prod, COMME D’HABITUDE, retirez cette ligne.
       - .:/afriqconsulting
       - static_volume:/afriqconsulting/static
       - staticfiles_volume:/afriqconsulting/staticfiles
       - media_volume:/afriqconsulting/media
       - logs_volume:/afriqconsulting/logs
-      # ⚠️ Dev/démo uniquement
+      # ⚠️ Dev/démo uniquement pour SQLite (à retirer si Postgres)
       - ./db.sqlite3:/afriqconsulting/db.sqlite3
     restart: unless-stopped
     networks: [acnetwork, proxy]
     healthcheck:
-      # évite curl si non présent
-      test: ["CMD-SHELL", "python - <<'PY'\nimport urllib.request,sys\ntry:\n  urllib.request.urlopen('http://127.0.0.1:8000/healthz', timeout=2)\n  sys.exit(0)\nexcept Exception:\n  sys.exit(1)\nPY"]
+      test:
+        [
+          "CMD-SHELL",
+          "python3 -c \"import urllib.request,sys; \
+try: urllib.request.urlopen('http://127.0.0.1:8000/healthz', timeout=2); sys.exit(0) \
+except Exception: sys.exit(1)\""
+        ]
       interval: 10s
       timeout: 3s
       retries: 12
@@ -43,28 +55,24 @@ services:
       - traefik.enable=true
       - traefik.docker.network=proxy
 
-      # Router HTTPS (apex)
+      # Router HTTPS apex
       - traefik.http.routers.afriq.rule=Host(`afriqconsulting.com`)
       - traefik.http.routers.afriq.entrypoints=websecure
       - traefik.http.routers.afriq.tls.certresolver=lets
       - traefik.http.routers.afriq.service=afriq
+      - traefik.http.routers.afriq.middlewares=sec-headers@docker,compress@docker,ratelimit@docker
+
+      # Router HTTPS pour www (optionnel mais recommandé)
+      - traefik.http.routers.afriq-www.rule=Host(`www.afriqconsulting.com`)
+      - traefik.http.routers.afriq-www.entrypoints=websecure
+      - traefik.http.routers.afriq-www.tls.certresolver=lets
+      - traefik.http.routers.afriq-www.service=afriq
+      - traefik.http.routers.afriq-www.middlewares=sec-headers@docker,compress@docker,ratelimit@docker
+
+#      # (Optionnel) Router HTTP → redirection HTTPS
+#      - traefik.http.routers.afriq-http.rule=Host(`afriqconsulting.com`,`www.afriqconsulting.com`)
+#      - traefik.http.routers.afriq-http.entrypoints=web
+#      - traefik.http.routers.afriq-http.middlewares=redir-https@docker
 
       # Service → port interne
       - traefik.http.services.afriq.loadbalancer.server.port=8000
-#      - traefik.http.services.afriq.loadbalancer.server.scheme=http
-
-      # Middlewares (utilise ceux déjà déclarés côté Traefik, comme pour smitci)
-      - traefik.http.routers.afriq.middlewares=sec-headers@docker,compress@docker,ratelimit@docker
-
-      # (Optionnel) Router HTTP pour rediriger en HTTPS
-#      - traefik.http.routers.afriq-http.rule=Host(`afriqconsulting.com`,`www.afriqconsulting.com`)
-#      - traefik.http.routers.afriq-http.entrypoints=web
-#      - traefik.http.routers.afriq-http.middlewares=redir-https
-#      - traefik.http.middlewares.redir-https.redirectscheme.scheme=https
-
-      # (Optionnel) Router HTTPS pour www
-#      - traefik.http.routers.afriq-www.rule=Host(`www.afriqconsulting.com`)
-#      - traefik.http.routers.afriq-www.entrypoints=websecure
-#      - traefik.http.routers.afriq-www.tls.certresolver=lets
-#      - traefik.http.routers.afriq-www.service=afriq
-#      - traefik.http.routers.afriq-www.middlewares=sec-headers@docker,compress@docker,ratelimit@docker
