@@ -46,7 +46,7 @@ USER appuser
 EXPOSE 8000
 
 # Entrypoint (migrations/collectstatic selon env)
-COPY docker/entrypoint.sh /entrypoint.sh
+COPY entrypoint.sh /entrypoint.sh
 USER root
 RUN chmod +x /entrypoint.sh && chown appuser:appuser /entrypoint.sh
 USER appuser
